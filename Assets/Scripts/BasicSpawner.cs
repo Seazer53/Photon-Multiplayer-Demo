@@ -7,28 +7,27 @@ using UnityEngine.SceneManagement;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
-    public static BasicSpawner Instance;
-    public List<GameObject> balls = new();
+    //public static BasicSpawner Instance;
+    //public List<GameObject> balls = new();
 
     private NetworkRunner _runner;
     [SerializeField] private NetworkPrefabRef _playerPrefab;
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new();
 
-    private void Awake()
+    /*private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
-    }
+    }*/
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (_runner.IsServer)
         {
-            Vector3 spawnPosition = new Vector3((player.RawEncoded % runner.Config.Simulation.DefaultPlayers) * 3, 1, 0);
+            Vector3 spawnPosition = new Vector3( 0, 1, 0);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
-            
             _spawnedCharacters.Add(player, networkPlayerObject);
         }
     }
@@ -66,10 +65,10 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             data.direction += Vector3.right;
         }
 
-        if (Input.GetKey(KeyCode.E))
+        /*if (Input.GetKey(KeyCode.E))
         {
             data.takeObject = true;
-        }
+        }*/
         
         input.Set(data);
         

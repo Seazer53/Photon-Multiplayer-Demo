@@ -5,30 +5,30 @@ using UnityEngine;
 public class Player : NetworkBehaviour
 {
     private Camera playCam;
-    private CinemachineVirtualCamera virtualCam;
-    private Transform stackPoint;
+    private CinemachineFreeLook freeLook;
+    //private Transform stackPoint;
     private NetworkCharacterControllerPrototype _cc;
     public void Awake()
     {
         _cc = GetComponent<NetworkCharacterControllerPrototype>();
-        stackPoint = transform.GetChild(0);
+        //stackPoint = transform.GetChild(0);
     }
 
     public override void FixedUpdateNetwork()
     {
-        if (!Object.HasInputAuthority)
+        if (!Object.HasStateAuthority)
         {
             return;
         }
         
         if (GetInput(out NetworkInputData data))
         {
-            var cameraRotationY = Quaternion.Euler(0, playCam.transform.rotation.eulerAngles.y, 0);
+            var cameraRotationY = Quaternion.Euler(0, playCam.transform.eulerAngles.y, 0);
             Vector3 move = cameraRotationY * data.direction;
             move.Normalize();
-            _cc.Move(5 * move * Runner.DeltaTime);
+            _cc.Move(move * Runner.DeltaTime);
 
-            if (data.takeObject)
+            /*if (data.takeObject)
             {
                 foreach (var ball in BasicSpawner.Instance.balls)
                 {
@@ -44,7 +44,7 @@ public class Player : NetworkBehaviour
                         data.takeObject = false;
                     }
                 }
-            }
+            }*/
         }
     }
 
@@ -56,12 +56,21 @@ public class Player : NetworkBehaviour
         }
 
         playCam = Camera.main;
-        virtualCam = transform.GetChild(1).transform.GetChild(0).GetComponent<CinemachineVirtualCamera>();
+        freeLook = transform.GetChild(0).transform.GetChild(0).GetComponent<CinemachineFreeLook>();
 
-        virtualCam.LookAt = GetComponent<NetworkCharacterControllerPrototype>().InterpolationTarget;
-        virtualCam.Follow = GetComponent<NetworkCharacterControllerPrototype>().InterpolationTarget;
+        freeLook.LookAt = GetComponent<NetworkCharacterControllerPrototype>().InterpolationTarget;
+        freeLook.Follow = GetComponent<NetworkCharacterControllerPrototype>().InterpolationTarget;
+
+        freeLook.m_Orbits[0].m_Height = 5;
+        freeLook.m_Orbits[0].m_Radius = 12;
         
-        virtualCam.gameObject.SetActive(true);
+        freeLook.m_Orbits[1].m_Height = 5;
+        freeLook.m_Orbits[1].m_Radius = 18;
+        
+        freeLook.m_Orbits[2].m_Height = 1;
+        freeLook.m_Orbits[2].m_Radius = 12;
+        
+        freeLook.gameObject.SetActive(true);
 
     }
 }
