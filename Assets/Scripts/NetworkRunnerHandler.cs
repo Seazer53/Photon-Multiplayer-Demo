@@ -9,17 +9,7 @@ using UnityEngine.SceneManagement;
 public class NetworkRunnerHandler : MonoBehaviour
 {
     public NetworkRunner networkRunnerPrefab;
-    
     private NetworkRunner networkRunner;
-    
-    private void Start()
-    {
-        /*networkRunner = Instantiate(networkRunnerPrefab);
-        networkRunner.name = "Network Runner";
-
-        var clientTask = InitializeNetworkRunner(networkRunner, GameMode.AutoHostOrClient, NetAddress.Any(),
-            SceneManager.GetActiveScene().buildIndex, null);*/
-    }
 
     protected virtual Task InitializeNetworkRunner(NetworkRunner runner, GameMode gameMode, NetAddress address,
         SceneRef scene, Action<NetworkRunner> initialized)

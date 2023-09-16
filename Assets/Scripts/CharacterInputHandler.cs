@@ -28,18 +28,10 @@ public class CharacterInputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*viewInputVector.x = Input.GetAxis("Mouse X");
-        viewInputVector.y = Input.GetAxis("Mouse Y") * -1;
-
-        characterMovementHandler.SetViewInputVector(viewInputVector);*/
-
         Transform camTransform = camera.transform;
         Vector3 forwardMovement = camTransform.forward * Input.GetAxis("Vertical");
         Vector3 horizontalMovement = camTransform.right * Input.GetAxis("Horizontal");
         movement = Vector3.ClampMagnitude(forwardMovement + horizontalMovement, 1);
-
-        //moveInputVector.x = Input.GetAxis("Horizontal");
-        //moveInputVector.y = Input.GetAxis("Vertical");
 
         if (Input.GetKey(KeyCode.Space))
         {
@@ -78,8 +70,6 @@ public class CharacterInputHandler : MonoBehaviour
     public NetworkInputData GetNetworkInput()
     {
         NetworkInputData networkInputData = new NetworkInputData();
-
-        //networkInputData.rotationInput = viewInputVector.x;
 
         networkInputData.direction = movement;
         networkInputData.isJumpPressed = isJumpButtonPressed;
