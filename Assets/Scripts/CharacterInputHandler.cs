@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class CharacterInputHandler : MonoBehaviour
@@ -8,10 +7,13 @@ public class CharacterInputHandler : MonoBehaviour
     private bool isJumpButtonPressed;
 
     private CharacterMovementHandler characterMovementHandler;
-
+    private Camera camera;
+    private Vector3 movement;
+    
     private void Awake()
     {
         characterMovementHandler = GetComponent<CharacterMovementHandler>();
+        camera = Camera.main;
     }
 
     private void Start()
@@ -27,9 +29,14 @@ public class CharacterInputHandler : MonoBehaviour
         viewInputVector.y = Input.GetAxis("Mouse Y") * -1;
 
         characterMovementHandler.SetViewInputVector(viewInputVector);*/
-        
-        moveInputVector.x = Input.GetAxis("Horizontal");
-        moveInputVector.y = Input.GetAxis("Vertical");
+
+        Transform camTransform = camera.transform;
+        Vector3 forwardMovement = camTransform.forward * Input.GetAxis("Vertical");
+        Vector3 horizontalMovement = camTransform.right * Input.GetAxis("Horizontal");
+        movement = Vector3.ClampMagnitude(forwardMovement + horizontalMovement, 1);
+
+        //moveInputVector.x = Input.GetAxis("Horizontal");
+        //moveInputVector.y = Input.GetAxis("Vertical");
 
         if (Input.GetKey(KeyCode.Space))
         {
@@ -49,7 +56,7 @@ public class CharacterInputHandler : MonoBehaviour
 
         //networkInputData.rotationInput = viewInputVector.x;
 
-        networkInputData.movementInput = moveInputVector;
+        networkInputData.direction = movement;
 
         networkInputData.isJumpPressed = isJumpButtonPressed;
 

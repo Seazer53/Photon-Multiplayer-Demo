@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterMovementHandler : NetworkBehaviour
 {
     //private Vector2 viewInput;
-    private Camera playCam;
+    private Quaternion cameraRotationY;
 
     //private float cameraRotationX = 0;
     //private Camera localCamera;
@@ -30,23 +30,22 @@ public class CharacterMovementHandler : NetworkBehaviour
         if (GetInput(out NetworkInputData networkInputData))
         {
             //networkCharacterControllerPrototypeCustom.Rotate(networkInputData.rotationInput);
-            
-            playCam = Camera.main;
-            var cameraRotationY = Quaternion.Euler(0, playCam.transform.eulerAngles.y, 0);
 
-            Vector3 moveDirection = transform.forward * networkInputData.movementInput.y +
+            /*Vector3 moveDirection = transform.forward * networkInputData.movementInput.y +
                                     transform.right * networkInputData.movementInput.x;
+                                    */
 
-            Vector3 camMoveDirection = cameraRotationY * moveDirection;
+            //Vector3 camMoveDirection = cameraRotationY * moveDirection;
+            /*Debug.Log(moveDirection.ToString());
 
-            camMoveDirection.Normalize();
+            moveDirection.Normalize();*/
 
             if (networkInputData.isJumpPressed)
             {
                 networkCharacterControllerPrototypeCustom.Jump();
             }
 
-            networkCharacterControllerPrototypeCustom.Move(camMoveDirection);
+            networkCharacterControllerPrototypeCustom.Move(networkInputData.direction);
 
         }
     }
