@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cinemachine;
 using Fusion;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class NetworkPlayer : NetworkBehaviour, IPlayerLeft
 {
     public static NetworkPlayer Local { get; set; }
+    public static List<GameObject> collectedBalls = new();
     private CinemachineFreeLook freeLook;
 
     public override void Spawned()

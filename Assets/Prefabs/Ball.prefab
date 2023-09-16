@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 3091788712611884783}
   - component: {fileID: 4072586930678031400}
   - component: {fileID: 909390677031527722}
+  - component: {fileID: 3769475757619547890}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Collectible
@@ -138,7 +139,8 @@ MonoBehaviour:
   NetworkGuid:
     RawGuidValue: b35563985bd027a439cd232ea07dc417
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 3769475757619547890}
   SimulationBehaviours: []
 --- !u!135 &909390677031527722
 SphereCollider:
@@ -161,3 +163,31 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3769475757619547890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7558726478431408742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 1831769160100420394}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+  UseLegacySharedModeInterpolation: 0
+  TargetInterpolationDelay: 0.03

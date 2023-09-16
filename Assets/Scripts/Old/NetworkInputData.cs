@@ -7,6 +7,7 @@ public struct NetworkInputData : INetworkInput
     public Vector3 direction;
     public NetworkBool takeObject;
     public NetworkBool dropObject;
+    public NetworkBool doorOpen;
     
     // New System
     public Vector2 movementInput;

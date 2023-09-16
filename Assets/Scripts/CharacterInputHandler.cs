@@ -5,6 +5,9 @@ public class CharacterInputHandler : MonoBehaviour
     private Vector2 moveInputVector = Vector2.zero;
     //private Vector2 viewInputVector = Vector2.zero;
     private bool isJumpButtonPressed;
+    private bool takeObject;
+    private bool dropObject;
+    private bool doorOpen;
 
     private CharacterMovementHandler characterMovementHandler;
     private Camera camera;
@@ -47,7 +50,29 @@ public class CharacterInputHandler : MonoBehaviour
         {
             isJumpButtonPressed = false;
         }
+        
+        if (Input.GetKey(KeyCode.E))
+        {
+            takeObject = true;
+            doorOpen = true;
+        }
 
+        else
+        {
+            takeObject = false;
+            doorOpen = false;
+        }
+        
+        if (Input.GetKey(KeyCode.G))
+        {
+            dropObject = true;
+        }
+
+        else
+        {
+            dropObject = false;
+        }
+        
     }
 
     public NetworkInputData GetNetworkInput()
@@ -57,8 +82,10 @@ public class CharacterInputHandler : MonoBehaviour
         //networkInputData.rotationInput = viewInputVector.x;
 
         networkInputData.direction = movement;
-
         networkInputData.isJumpPressed = isJumpButtonPressed;
+        networkInputData.takeObject = takeObject;
+        networkInputData.dropObject = dropObject;
+        networkInputData.doorOpen = doorOpen;
 
         return networkInputData;
 
